@@ -1,5 +1,5 @@
     
-def lee_num(msg: str) -> int:
+def lee_num(msg: str) -> int | None:
     """
     Lee un numero desde el terminal.
     :returns: Un entero que representa el numero ingresado.
@@ -7,6 +7,8 @@ def lee_num(msg: str) -> int:
     while True:
         try:
             num = input(msg)
+            if num.lower() == 'q':
+                return None
             num = int(num)
             break
         except ValueError:
@@ -21,10 +23,14 @@ def lee_num(msg: str) -> int:
 if __name__ == '__main__':
     nums = list()
 
-    num_len = lee_num("Ingrese la cantidad de muestras a tomar: ")
-    for _ in range(num_len):
-        nums.append(lee_num("Ingrese un numero: "))
+    idx = 0
+    while True:
+        numero = lee_num(f"Ingrese un numero para la muestra {idx + 1} u oprima tecla 'q' para terminar: ")
+        if numero is None:
+            break
+        nums.append(numero)
+        idx += 1
 
     promedio = sum(nums) / len(nums)
 
-    print(promedio)
+    print(f"El promedio de {idx} muestras es: {promedio}")

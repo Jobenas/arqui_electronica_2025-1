@@ -14,7 +14,7 @@ if __name__ == '__main__':
     sock.connect(server_address)
     nota_base = 20250001
 
-    msg = f"{nota_base + randint(0, 200)}"
+    msg = f"{nota_base + randint(0, 199)}"
     inicio = time.perf_counter()
     sock.sendall(msg.encode("utf-8"))
     data = sock.recv(SOCK_BUFFER)

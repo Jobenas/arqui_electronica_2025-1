@@ -5,6 +5,9 @@ import time
 
 SOCK_BUFFER = 1024
 
+contador_cliente = 0
+
+
 def busca_notas(codigo: str) -> list[int]:
     """
     Busca las notas correspondientes al codigo de alumno suministrado
@@ -42,7 +45,10 @@ def calc_nota_final(notas: list[int]) -> float:
 
 
 def handle_client(conn: socket.socket, client_address: tuple[str, int]):
+    global contador_cliente
     print(f"Conexion desde {client_address[0]}:{client_address[1]}")
+    contador_cliente += 1
+    print(f"Numero de clientes conectados concurrentemente: {contador_cliente}")
     try: 
         while True:
             data = conn.recv(SOCK_BUFFER)
@@ -67,6 +73,7 @@ def handle_client(conn: socket.socket, client_address: tuple[str, int]):
     finally:
         print("Cerrando la conexión")
         conn.close()
+        contador_cliente -= 1
 
 
 if __name__ == '__main__':
